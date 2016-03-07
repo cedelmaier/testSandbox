@@ -32,12 +32,12 @@ public:
 
     // virtual function that gets overridden
     virtual void doSomething() override {
-        try {
+        /*try {
             *(int*) 0 = 0;
         }
         catch (const std::exception &e){
             std::cout << e.what();
-        }
+        }*/
     }
 
     double newbar;
