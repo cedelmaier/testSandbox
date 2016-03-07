@@ -31,7 +31,14 @@ public:
     derivedSpecies(double pNewbar = 0, ARGS&&... args) : basespecies<base> { std::forward<ARGS>(args)... }, newbar(pNewbar) {}
 
     // virtual function that gets overridden
-    virtual void doSomething() override {}
+    virtual void doSomething() override {
+        try {
+            *(int*) 0 = 0;
+        }
+        catch (const std::exception &e){
+            std::cout << e.what();
+        }
+    }
 
     double newbar;
 };
@@ -82,6 +89,8 @@ int main() {
 
     // Can we make a derived species?
     derivedSpecies* testDerivedSpecies = new derivedSpecies(2.0, 1.0);
+
+    testDerivedSpecies->doSomething();
 
     // Can we make the generic holder for dervied species?
     systemArch<derivedSpecies, int>* testSystem = new systemArch<derivedSpecies, int>();
