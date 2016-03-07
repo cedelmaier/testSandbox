@@ -3,8 +3,10 @@
 #include <iostream>
 #include <memory>
 
+// Base class for EVERYBODY
 class base {
 public:
+    // Constructor with default arguments, and initialization
     base(int pFoo = 0) : foo(pFoo) {}
 
     int foo;
@@ -16,6 +18,9 @@ public:
     typedef std::shared_ptr<T> ptype;
     basespecies(double pBar = 0.0) : bar(pBar) {}
 
+    // virtual function
+    virtual void doSomething() {}
+
     std::vector<ptype> particles;
     double bar;
 };
@@ -24,6 +29,9 @@ class derivedSpecies : public basespecies<base> {
 public:
     template<typename... ARGS>
     derivedSpecies(double pNewbar = 0, ARGS&&... args) : basespecies<base> { std::forward<ARGS>(args)... }, newbar(pNewbar) {}
+
+    // virtual function that gets overridden
+    virtual void doSomething() override {}
 
     double newbar;
 };
@@ -41,6 +49,31 @@ public:
 };
 
 int main() {
+    // Cool, neat c++11 concepts, basic first
+    // auto type deduction
+    auto x = 5;
+
+    std::cout << "x: " << x << std::endl;
+
+    // Range based for loops, super effective
+    // Also, initializer list
+    std::vector<int> myvector = {0,1,2,3,4};
+    // Bad way
+    std::cout << "The bad way!\n";
+    for (std::vector<int>::iterator it = myvector.begin(); it != myvector.end(); ++it) {
+        std::cout << *it;
+    }
+    std::cout << std::endl;
+    // Good way!
+    std::cout << "The good way!\n";
+    for (auto& x : myvector) {
+        std::cout << ++x;
+    }
+    std::cout << std::endl;
+
+
+
+
     // Can we make a base?
     base* testBase = new base(1);
 
