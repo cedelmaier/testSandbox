@@ -56,31 +56,6 @@ public:
 };
 
 int main() {
-    // Cool, neat c++11 concepts, basic first
-    // auto type deduction
-    auto x = 5;
-
-    std::cout << "x: " << x << std::endl;
-
-    // Range based for loops, super effective
-    // Also, initializer list
-    std::vector<int> myvector = {0,1,2,3,4};
-    // Bad way
-    std::cout << "The bad way!\n";
-    for (std::vector<int>::iterator it = myvector.begin(); it != myvector.end(); ++it) {
-        std::cout << *it;
-    }
-    std::cout << std::endl;
-    // Good way!
-    std::cout << "The good way!\n";
-    for (auto& x : myvector) {
-        std::cout << ++x;
-    }
-    std::cout << std::endl;
-
-
-
-
     // Can we make a base?
     base* testBase = new base(1);
 
@@ -96,6 +71,17 @@ int main() {
     systemArch<derivedSpecies, int>* testSystem = new systemArch<derivedSpecies, int>();
 
     std::cout << "n sys " << testSystem->nsys << std::endl;
+
+    // Start playing around with how to access things in the tuple
+    auto& system1 = std::get<0>(testSystem->systems);
+    std::cout << "system1: {newbar: " << system1.newbar << "}\n";
+    system1.newbar = 2.0;
+    std::cout << "system1: {newbar: " << system1.newbar << "}\n";
+
+    auto& system2 = std::get<0>(testSystem->systems);
+    std::cout << "system2: {newbar: " << system2.newbar << "}\n";
+    system2.newbar = 32.0;
+    std::cout << "system2: {newbar: " << system2.newbar << "}\n";
 
     return 0;
 }
